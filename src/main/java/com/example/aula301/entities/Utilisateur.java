@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_utilisateur") // Cette ligne n'est applicable que lors de l'utilisation de noms réservés par le système ou pour redéfinir le nom uniquement dans la base de données.
 public class Utilisateur implements Serializable {
@@ -19,10 +21,13 @@ public class Utilisateur implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nom;
 	private String courriel;
 	private String telephone;
 	private String motDePasse;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Commande> commandes = new ArrayList<>();
 	
