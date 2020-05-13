@@ -1,13 +1,18 @@
 package com.example.aula301.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_utilisateur") // Cette ligne n'est applicable que lors de l'utilisation de noms réservés par le système ou pour redéfinir le nom uniquement dans la base de données.
 public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -18,6 +23,8 @@ public class Utilisateur implements Serializable {
 	private String courriel;
 	private String telephone;
 	private String motDePasse;
+	@OneToMany(mappedBy = "client")
+	private List<Commande> commandes = new ArrayList<>();
 	
 	public Utilisateur() {
 	}
@@ -69,6 +76,10 @@ public class Utilisateur implements Serializable {
 
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
+	}
+	
+	public List<Commande> getCommandes() {
+		return commandes;
 	}
 
 	@Override
