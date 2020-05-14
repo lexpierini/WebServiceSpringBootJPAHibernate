@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_produit")
@@ -23,7 +25,9 @@ public class Produit implements Serializable {
 	private String description;
 	private Double prix;
 	private String imgUrl;
-	@Transient
+	
+	@ManyToMany
+	@JoinTable(name = "tb_produit_categorie", joinColumns = @JoinColumn(name = "produit_id"), inverseJoinColumns = @JoinColumn(name = "categorie_id"))
 	private Set<Categorie> categories = new HashSet<>(); // La collection Set garantit que nous n'aurons pas un produit avec plus d'une occurrence dans la même catégorie.
 	
 	public Produit() {
