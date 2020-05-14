@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.example.aula301.entities.enums.StatutDeLaCommande;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -25,6 +26,8 @@ public class Commande implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
+	private Integer statutDeLaCommande;
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Utilisateur client;
@@ -32,10 +35,11 @@ public class Commande implements Serializable {
 	public Commande() {
 	}
 
-	public Commande(Long id, Instant moment, Utilisateur client) {
+	public Commande(Long id, Instant moment, StatutDeLaCommande statutDeLaCommande, Utilisateur client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setStatutDeLaCommande(statutDeLaCommande);
 		this.client = client;
 	}
 
@@ -53,6 +57,16 @@ public class Commande implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+
+	public StatutDeLaCommande getStatutDeLaCommande() {
+		return StatutDeLaCommande.valueOf(statutDeLaCommande);
+	}
+
+	public void setStatutDeLaCommande(StatutDeLaCommande statutDeLaCommande) {
+		if (statutDeLaCommande != null) {
+			this.statutDeLaCommande = statutDeLaCommande.getCode();
+		}
 	}
 
 	public Utilisateur getClient() {
