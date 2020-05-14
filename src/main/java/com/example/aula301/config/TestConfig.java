@@ -8,11 +8,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.example.aula301.entities.ArticleDeCommande;
 import com.example.aula301.entities.Categorie;
 import com.example.aula301.entities.Commande;
 import com.example.aula301.entities.Produit;
 import com.example.aula301.entities.Utilisateur;
 import com.example.aula301.entities.enums.StatutDeLaCommande;
+import com.example.aula301.repositories.ArticleDeCommandeRepository;
 import com.example.aula301.repositories.CategorieRepository;
 import com.example.aula301.repositories.CommandeRepository;
 import com.example.aula301.repositories.ProduitRepository;
@@ -30,6 +32,8 @@ public class TestConfig implements CommandLineRunner {
 	private CategorieRepository categorieRepository;
 	@Autowired
 	private ProduitRepository produitRepository;
+	@Autowired
+	private ArticleDeCommandeRepository articleDeCommandeRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -59,10 +63,16 @@ public class TestConfig implements CommandLineRunner {
 		Utilisateur u2 = new Utilisateur(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 		utilisateurRepository.saveAll(Arrays.asList(u1, u2));
 		
-		Commande o1 = new Commande(null, Instant.parse("2019-06-20T19:53:07Z"), StatutDeLaCommande.PAYE, u1);
-		Commande o2 = new Commande(null, Instant.parse("2019-07-21T03:42:10Z"), StatutDeLaCommande.EN_ATTENTE_DE_PAIEMENT, u2);
-		Commande o3 = new Commande(null, Instant.parse("2019-07-22T15:21:22Z"), StatutDeLaCommande.EN_ATTENTE_DE_PAIEMENT, u1);
-		commandeRepository.saveAll(Arrays.asList(o1, o2, o3));
+		Commande c1 = new Commande(null, Instant.parse("2019-06-20T19:53:07Z"), StatutDeLaCommande.PAYE, u1);
+		Commande c2 = new Commande(null, Instant.parse("2019-07-21T03:42:10Z"), StatutDeLaCommande.EN_ATTENTE_DE_PAIEMENT, u2);
+		Commande c3 = new Commande(null, Instant.parse("2019-07-22T15:21:22Z"), StatutDeLaCommande.EN_ATTENTE_DE_PAIEMENT, u1);
+		commandeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		ArticleDeCommande ac1 = new ArticleDeCommande(c1, p1, 2, p1.getPrix());
+		ArticleDeCommande ac2 = new ArticleDeCommande(c1, p3, 1, p3.getPrix());
+		ArticleDeCommande ac3 = new ArticleDeCommande(c2, p3, 2, p3.getPrix());
+		ArticleDeCommande ac4 = new ArticleDeCommande(c3, p5, 2, p5.getPrix());
+		articleDeCommandeRepository.saveAll(Arrays.asList(ac1, ac2, ac3, ac4));
 		
 	}
 

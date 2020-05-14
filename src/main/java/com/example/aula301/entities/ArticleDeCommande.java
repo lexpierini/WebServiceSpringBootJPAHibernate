@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.example.aula301.entities.pk.ArticleDeCommandePK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_article_de_commande")
@@ -14,7 +15,8 @@ public class ArticleDeCommande implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private ArticleDeCommandePK id;
+	private ArticleDeCommandePK id = new ArticleDeCommandePK();
+	
 	private Integer quantite;
 	private Double prix;
 	
@@ -29,6 +31,7 @@ public class ArticleDeCommande implements Serializable {
 		this.prix = prix;
 	}
 	
+	@JsonIgnore
 	public Commande getCommande() {
 		return id.getCommande();
 	}

@@ -2,6 +2,8 @@ package com.example.aula301.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.aula301.entities.enums.StatutDeLaCommande;
@@ -31,6 +34,9 @@ public class Commande implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Utilisateur client;
+	
+	@OneToMany(mappedBy = "id.commande")
+	private Set<ArticleDeCommande> articles = new HashSet<>();
 	
 	public Commande() {
 	}
@@ -75,6 +81,10 @@ public class Commande implements Serializable {
 
 	public void setClient(Utilisateur client) {
 		this.client = client;
+	}
+	
+	public Set<ArticleDeCommande> getArticles() {
+		return articles;
 	}
 
 	@Override
