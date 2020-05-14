@@ -12,24 +12,30 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "tb_categorie")
-public class Categorie implements Serializable {
+@Table(name = "tb_produit")
+public class Produit implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nom;
+	private String description;
+	private Double prix;
+	private String imgUrl;
 	@Transient
-	private Set<Produit> produits = new HashSet<>(); // La collection Set garantit que nous n'aurons pas un produit avec plus d'une occurrence dans la même catégorie.
+	private Set<Categorie> categories = new HashSet<>(); // La collection Set garantit que nous n'aurons pas un produit avec plus d'une occurrence dans la même catégorie.
 	
-	public Categorie() {
+	public Produit() {
 	}
 
-	public Categorie(Long id, String nom) {
+	public Produit(Long id, String nom, String description, Double prix, String imgUrl) {
 		super();
 		this.id = id;
 		this.nom = nom;
+		this.description = description;
+		this.prix = prix;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -40,16 +46,40 @@ public class Categorie implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getNom() {
 		return nom;
 	}
 
-	public void setName(String nom) {
+	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
-	public Set<Produit> getProduits() {
-		return produits;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(Double prix) {
+		this.prix = prix;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public Set<Categorie> getCategories() {
+		return categories;
 	}
 
 	@Override
@@ -68,7 +98,7 @@ public class Categorie implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorie other = (Categorie) obj;
+		Produit other = (Produit) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
