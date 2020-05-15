@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.example.aula301.entities.ArticleDeCommande;
 import com.example.aula301.entities.Categorie;
 import com.example.aula301.entities.Commande;
+import com.example.aula301.entities.Paiement;
 import com.example.aula301.entities.Produit;
 import com.example.aula301.entities.Utilisateur;
 import com.example.aula301.entities.enums.StatutDeLaCommande;
@@ -73,6 +74,10 @@ public class TestConfig implements CommandLineRunner {
 		ArticleDeCommande ac3 = new ArticleDeCommande(c2, p3, 2, p3.getPrix());
 		ArticleDeCommande ac4 = new ArticleDeCommande(c3, p5, 2, p5.getPrix());
 		articleDeCommandeRepository.saveAll(Arrays.asList(ac1, ac2, ac3, ac4));
+		
+		Paiement pai1 = new Paiement(null, Instant.parse("2019-06-20T21:53:07Z"), c1);
+		c1.setPaiement(pai1);
+		commandeRepository.save(c1);
 		
 	}
 

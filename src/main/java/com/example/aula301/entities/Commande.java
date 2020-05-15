@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.aula301.entities.enums.StatutDeLaCommande;
@@ -37,6 +39,9 @@ public class Commande implements Serializable {
 	
 	@OneToMany(mappedBy = "id.commande")
 	private Set<ArticleDeCommande> articles = new HashSet<>();
+	
+	@OneToOne(mappedBy = "commande", cascade = CascadeType.ALL)
+	private Paiement paiement;
 	
 	public Commande() {
 	}
@@ -83,6 +88,14 @@ public class Commande implements Serializable {
 		this.client = client;
 	}
 	
+	public Paiement getPaiement() {
+		return paiement;
+	}
+
+	public void setPaiement(Paiement paiement) {
+		this.paiement = paiement;
+	}
+
 	public Set<ArticleDeCommande> getArticles() {
 		return articles;
 	}
