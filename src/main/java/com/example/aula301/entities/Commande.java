@@ -99,6 +99,14 @@ public class Commande implements Serializable {
 	public Set<ArticleDeCommande> getArticles() {
 		return articles;
 	}
+	
+	public Double getTotal() {
+		double somme = 0.0;
+		for(ArticleDeCommande x : articles) {
+			somme += x.getSousTotal();
+		}
+		return somme;
+	}
 
 	@Override
 	public int hashCode() {

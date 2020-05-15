@@ -64,6 +64,10 @@ public class ArticleDeCommande implements Serializable {
 		this.prix = prix;
 	}
 
+	public Double getSousTotal() {
+		return prix * quantite;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
